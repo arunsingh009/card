@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Credit Card Payment Form</title>
+	<script type="text/javascript">
+		function validateForm() {
+			// Validate credit card number
+			var ccNumber = document.forms["paymentForm"]["cardNumber"].value;
+			var ccType = document.forms["paymentForm"]["cardType"].value;
+			if (!validateCardNumber(ccNumber, ccType)) {
+				alert("Invalid credit card number.");
+				return false;
+			}
+
+			// Validate email address
+			var email = document.forms["paymentForm"]["email"].value;
+			if (!validateEmail(email)) {
+				alert("Invalid email address.");
+				return false;
+			}
+
+			return true;
+		}
+
+		function validateCardNumber(number, type) {
+			// Check card type and length
+			if (type == "visa" && (number.length < 13 || number.length > 16)) {
+				return false;
+			} else if ((type == "mastercard" || type == "discover") && number.length != 16) {
+				return false;
+			}
+
+			// Check if the number contains only digits
+			if (!/^\d+$/.test(number)) {
+				return false;
+			}
+
+			return true;
+		}
+
+		function validateEmail(email) {
+			// Check if the email address matches the pattern
+			if (!/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)) {
+				return false;
+			}
+
+			return true;
+		}
+	</script>
+</head>
+<body>
+	<h1>Credit Card Payment Form</h1>
+	<form name="paymentForm" onsubmit="return validateForm()">
+		<label for="cardType">Card Type:</label>
+		<select name="cardType">
+			<option value="visa">Visa</option>
+			<option value="mastercard">MasterCard</option>
+			<option value="discover">Discover</option>
+		</select><br>
+
+		<label for="cardNumber">Card Number:</label>
+		<input type="text" name="cardNumber" required><br>
+
+		<label for="expiration">Expiration Date:</label>
+		<input type="month" name="expiration" required><br>
+
+		<label for="name">Name on Card:</label>
+		<input type="text" name="name" required><br>
+
+		<label for="email">Email Address:</label>
+		<input type="email" name="email" required><br>
+
+		<input type="submit" value="Submit">
+	</form>
+</body>
+</html>
